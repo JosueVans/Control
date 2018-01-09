@@ -61,7 +61,7 @@ public class usuarioBean {
         verificarCorreo();
         if (verificarCorreo()) {
 
-            this.selectedUsuario.setPassword(this.selectedUsuario.getNomUsuario());
+           // this.selectedUsuario.setPassword(this.selectedUsuario.getNomUsuario());
             //this.selectedUsuario.setNomUsuario("admin");
             if (usuarioDao.create(this.selectedUsuario)) {
                 msg = "Se creó exitosamente el registro";
