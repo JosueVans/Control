@@ -44,9 +44,13 @@
                             <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
 
                                 <h:outputText value="Nombre:" />
-                                <p:inputText id="nom" title="Introduzca su nombre de Usuario" value="#{usuarioBean.selectedUsuario.nomUsuario}" size="25"/>                   
+                                <p:inputText id="nom" title="Introduzca su nombre de Usuario" value="#{usuarioBean.selectedUsuario.nomUsuario}" size="25"/>  
+                                <h:outputText value="Contraseña:" />
+                                <p:password required="true" feedback="true" id="con" title="Introduzca su Contraseña de Usuario" value="#{usuarioBean.selectedUsuario.password}" size="25"/>
                                 <h:outputText value="Correo:" />
                                 <p:inputText id="cor" title="Introduzca su Correo" value="#{usuarioBean.selectedUsuario.correo}" size="25" />
+                                
+                                
                                 <h:outputLabel for="console" value="Rol:" />
                                 <p:selectOneMenu id="console" value="#{usuarioBean.selectedUsuario.rol}" style="width:265px">
                                     <f:selectItem itemLabel="Administrador de Sistema" itemValue="Admin" />
