@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml" >
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true"/>
+
+                <h:form id="formDataTableCargo">
+                    <p:dataTable id="us" var="cargo" value="#{cargoBean.cargo}"
+                                 scrollable="true" scrollHeight="450" style="font-size: 14px" emptyMessage="No hay registros que mostrar">
+                        <f:facet name ="header">
+                            Listado de Cargos
+                        </f:facet>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cargo.cargo}"/>
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{cargo.rol.idRol}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate">
+                    <p:dialog header="Crear Cargo" widgetVar="dialogCargoCreate" id="dlgCargoCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="DetalleCargo" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
+                                <h:outputText value="Rol:" />
+                                <p:selectOneMenu  value="#{cargoBean.selectedCargo.rol.idRol}" style="width:210px">
+                                    <f:selectItems value="#{rolBean.listaItemRol}" />            
+                                </p:selectOneMenu>
+                                <h:outputText value="Rol:" />
+                                <p:inputText value="#{cargoBean.selectedCargo.cargo}"/>
+                                <f:facet name="footer">
+                                    <p:separator/>
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTableCargo, :msgs" oncomplete="PF('dialogCargoCreate').hide()" actionListener="#{cargoBean.createCargo(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogCargoCreate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar"/>
+                                </f:facet>
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                
+                <h:form id="formListar">
+                    <p:dialog header="Crear Cargo" widgetVar="dialogListar" id="dlgCargoCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="DetalleCargo" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
+                                <h:outputText value="Rol:" />
+                                <p:selectOneMenu  value="#{cargoBean.selectedRol.idRol}" style="width:210px"  >
+                                    <f:selectItems value="#{puestoBean.listaRol}" />            
+                                <p:ajax update="ca"/>
+                                </p:selectOneMenu>
+                                 
+                                <h:outputText value="cargo:" />
+                                <p:selectOneMenu  id="ca" value="#{cargoBean.selectedCargo.idCargo}" style="width:210px"  >
+                                   
+                                    <f:selectItems value="#{puestoBean.listaCargoPorRol}" />            
+                                </p:selectOneMenu>
+                               
+                                <f:facet name="footer">
+                                    <p:separator/>
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTableCargo, :msgs" oncomplete="PF('dialogListar').hide()" actionListener="#{puestoBean.createCargo(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogListar').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar"/>
+                                    
+                                </f:facet>
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form> 
+
+                    <p:commandButton id="BtnUsuarioCreate" update=":formCreate" oncomplete="PF('dialogCargoCreate').show()" icon="ui-icon-plus" title="Crear" value="Crear" style="font-size: 14px"/>
+                    <p:commandButton id="BtnUsuarioCreateCargo" update=":formListar" oncomplete="PF('dialogListar').show()" icon="ui-icon-plus" title="Crear" value="Listar" style="font-size: 14px"/>                   
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

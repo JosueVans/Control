@@ -41,15 +41,15 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-schema="ADMIN_CRM"/>
-  <table-filter match-name="ESTADO_NEGOCIO"/>
-  <table-filter match-name="TIPO_CLIENTE"/>
-  <table-filter match-name="USUARIOS"/>
-  <table-filter match-name="TIPO_NEGOCIO"/>
-  <table-filter match-name="OPORTUNIDADES"/>
   <table-filter match-name="PAIS"/>
-  <table-filter match-name="CARGO"/>
+  <table-filter match-name="TIPO_NEGOCIO"/>
   <table-filter match-name="NEGOCIO"/>
-  <table-filter match-name="FASE"/>
-  <table-filter match-name="EMPRESA"/>
+  <table-filter match-name="ESTADO_NEGOCIO"/>
   <table-filter match-name="EMPLEADOS"/>
+  <table-filter match-name="CARGO"/>
+  <table-filter match-name="ROL"/>
+  <table-filter match-name="FASE"/>
+  <table-filter match-name="USUARIOS"/>
+  <table-filter match-name="OPORTUNIDADES"/>
+  <table-filter match-name="EMPRESA"/>
 </hibernate-reverse-engineering>

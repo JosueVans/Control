@@ -18,6 +18,8 @@ public class appBean {
     public String getBasePath(){
     return MyUtil.basepath();
     }
-    
+    public String getBaseUsuario(){
+    return MyUtil.baseUsuario();
+    }
   
 }

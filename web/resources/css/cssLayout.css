@@ -36,7 +36,7 @@
     background-color: #dddddd;
     padding: 5px;
     margin-top: 1px;
-    min-height: 40px;
+    min-height: 60px;
 }
 
 .left_content {
@@ -67,5 +67,8 @@
     width: 1500px;
     margin-left: auto;
     margin-right: auto;
+   
 }
+.ui-button{ width:10px; height:100px; }
+
 

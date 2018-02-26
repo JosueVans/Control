@@ -20,5 +20,8 @@ public class MyUtil {
     public static String basepath(){
     return "/faces/vistas/";
     }
+    public static String baseUsuario(){
+    return "usuario/index.xhtml";
+    }
     
 }

@@ -13,16 +13,15 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
-/**
- *
- * @author oracle
- */
 @Named(value = "loginBean")
 @SessionScoped
 public class loginBean implements Serializable {
 
     private Usuarios usuario;
     private UsuarioDao usuarioDao;
+    
+
+    
 
     public loginBean() {
         this.usuarioDao = new UsuarioDao();
@@ -44,20 +43,24 @@ public class loginBean implements Serializable {
         FacesMessage message;
         boolean loggedIn;
         String ruta = "";
+        SesionBean rol =new SesionBean();
         this.usuario = this.usuarioDao.login(this.usuario);
         if (this.usuario != null) {
             loggedIn = true;
+           
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getNomUsuario());
-
+            
+                         
+           //rol.rol();
             ruta = MyUtil.basePathLogin() + "vistas/inicio.xhtml";
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", this.usuario.getNomUsuario());
+          
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario y Contraseña incorrectas");
             if (this.usuario == null) {
                 this.usuario = new Usuarios();
             }
-
         }
 
         FacesContext.getCurrentInstance().addMessage(null, message);

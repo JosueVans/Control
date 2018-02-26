@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+               <p:growl id="msgs" showDetail="true"/>
+                <h:form id="formDataTable" >
+                    <p:dataTable id="us" var="estadoNegocio" value="#{estadoNegocioBean.estadoNegocio}"
+                                 scrollable="true" scrollHeight="450" style="font-size: 14px; " emptyMessage="No hay registros que mostrar" >
+                        <f:facet name ="header">
+                            Listado de estado de negocio
+                        </f:facet>
+                        <p:column headerText="Estado de Negocio">
+                            <h:outputText value="#{estadoNegocio.estadoNegocio}"/>
+                        </p:column>
+                       <p:column style="width: 4%">
+                            <p:commandButton id="BtnUsuarioUpdate" update=":formUpdate" oncomplete="PF('dialogEstadoNegocioUpdate').show()" icon="ui-icon-pencil" title="Modificar">
+                                <f:setPropertyActionListener value="#{estadoNegocio}" target="#{estadoNegocioBean.selectedEstadoNegocio}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnUsuarioDelete" update=":formDelete" oncomplete="PF('dialogEstadoNegocioDelete').show()" icon="ui-icon-trash" title="Eliminar">
+                                <f:setPropertyActionListener value="#{estadoNegocio}" target="#{estadoNegocioBean.selectedEstadoNegocio}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <h:form id="formCreate" >
+                    <p:dialog header="Crear Estado de Negocio" widgetVar="dialogEstadoNegocioCreate" id="dlgTipoNegocioCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px" >
+                        <p:outputPanel id="DetalleEstadoNegocio" style="text-align:center;">
+                            
+                                
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
+                                <h:outputText value="Estado de Negocio:" />
+                                <p:inputText id="nom" title="Introduzca el estado de negocio" value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25"/>  
+                                                        
+                                <f:facet name="footer">
+                                   
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogEstadoNegocioCreate').hide()" actionListener="#{estadoNegocioBean.createEstadoNegocio(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogEstadoNegocioCreate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                                <p:tooltip id="toolTipNombre" for="nom" showEvent="focus" hideEvent="blur" />
+                                
+                            </h:panelGrid>     
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar Estado de negocio" widgetVar="dialogEstadoNegocioUpdate" id="dlgEstadoNegocioUpdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Estado de negocio:" />
+                                <p:inputText value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25"/>
+                                <h:inputHidden value="#{estadoNegocioBean.selectedEstadoNegocio.idEstadoNegocio}" />
+                                <f:facet name="footer">
+                                    <p:separator/>
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogEstadoNegocioUpdate').hide()" actionListener="#{estadoNegocioBean.updateEstadoNegocio(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogEstadoNegocioUpdate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formDelete">
+                    <p:dialog header="Eliminar un tipo de negocio" widgetVar="dialogEstadoNegocioDelete" id="dlgEstadoNegocioDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Eliminar el siguiente Estado de negocio:" />
+                                <h:outputText value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}"/>
+                                <h:inputHidden value="#{estadoNegocioBean.selectedEstadoNegocio.idEstadoNegocio}"/>
+                                <f:facet name="footer">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogEstadoNegocioDelete').hide()" actionListener="#{estadoNegocioBean.deleteEstadoNegocio(actionEvent)}" icon="ui-icon-disk" title="Eliminar" value="Eliminar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogEstadoNegocioDelete').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form>
+                    <p:column style="width: 4%">
+                        <p:commandButton id="BtnEstadoNegocioCreate" update=":formCreate" oncomplete="PF('dialogEstadoNegocioCreate').show()" icon="ui-icon-plus" title="Crear" value="Crear" style="font-size: 14px"/>
+                    </p:column>
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

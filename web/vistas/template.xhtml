@@ -15,63 +15,97 @@
 
     <h:body>
         <div id="container">
-        <div id="top" class="ui-widget-header ui-corner-all">
-            <ui:insert name="top">Rinnovo CRM</ui:insert>
-        </div>
-        <div id="menu" class="ui-menu ui-menubar ui-widget ui-widget-content ui-corner-all ui-helper-clearfix">
-            <h:form>  
-               
-
-                <p:menubar>
-                    <p:submenu label="Sistema" icon="ui-icon-document">
-                        <p:menuitem value="Integrantes de la Fuerza de Venta" url="#{appBean.basePath}usuario/index.xhtml" />
-                        <p:separator />
-                        <p:menuitem value="Quit" url="#" />
-                    </p:submenu>
-
-                    <p:submenu label="Edit" icon="ui-icon-pencil">
-                        <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
-                        <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
-                    </p:submenu>
-
-                    <p:submenu label="Help" icon="ui-icon-help">
-                        <p:menuitem value="Contents" url="#" />
-                        <p:submenu label="Search" icon="ui-icon-search">
-                            <p:submenu label="Text">
-                                <p:menuitem value="Workspace" url="#" />
-                            </p:submenu>
-                            <p:menuitem value="File" url="#" />
-                        </p:submenu>
-                    </p:submenu>
-
-                    <p:submenu label="Actions" icon="ui-icon-gear">
-                        <p:submenu label="Ajax" icon="ui-icon-refresh">
-                            <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
-                            <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" />
-                        </p:submenu>
-                        <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-                            <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close"  ajax="false"/>
-                        </p:submenu>
-                    </p:submenu>
-
-                    <p:menuitem value="Salir" actionListener="#{loginBean.logout}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>                 
-                </p:menubar>
-            </h:form>            
-        </div>
-        <div id="content" class="center_content ui-widget-content ui-corner-all">
-            <ui:insert name="content">Content</ui:insert>
-        </div>
-
-        <div id="bottom" class="  ui-widget-header ui-corner-all ">
-            <ui:insert name="bottom">&copy; All Rights Reserved 2017 - Rinnovo </ui:insert>
-        </div>
-            
+            <div id="top" class="ui-widget-header ui-corner-all">
+                <h:form> 
+                    <p:tabMenu>
+                        <p:menuitem icon="ui-icon-star" style="font-size: 12px">
+                            <f:param name="i" value="0" />
+                        </p:menuitem>
+                        <p:menuitem icon="ui-icon-search" style="font-size: 12px">
+                            <f:param name="i" value="1" />
+                        </p:menuitem>
+                        <p:menuitem icon="ui-icon-document" style="font-size: 12px">
+                            <f:param name="i" value="2" />
+                        </p:menuitem>
+                        <p:menuitem value="#{loginBean.usuario.nomUsuario}" icon="ui-icon-person" style="font-size: 12px">
+                            <f:param name="i" value="3" />
+                        </p:menuitem>
+                        <p:menuitem icon="ui-icon-wrench" style="font-size: 12px">
+                            <f:param name="i" value="4" />
+                        </p:menuitem>
+                    </p:tabMenu>
+                </h:form> 
             </div>
-<script type="text/javascript">
+
+
+
+            <div id="menu" class="ui-menu ui-menubar ui-widget ui-widget-content ui-corner-all ui-helper-clearfix">
+                <h:form>  
+                    <p:menubar>
+                        <p:submenu label="Catalogo" icon="ui-icon-document" >
+                            <p:menuitem value="Integrantes de la Fuerza de Venta" url="/faces/vistas/usuario/index.xhtml" />
+                            <p:submenu label="Puesto">                               
+                                <p:menuitem value="Asignacion de Cargo" url="/faces/vistas/puesto/puesto.xhtml" />                               
+                            </p:submenu>
+                            <p:submenu label="Negocio">
+                                <p:menuitem value="Negocio" url="/faces/vistas/negocio/negocio.xhtml" />
+                                <p:menuitem value="Tipo" url="/faces/vistas/negocio/tipo.xhtml" />
+                                <p:menuitem value="Estado" url="/faces/vistas/negocio/estado.xhtml" />
+                                <p:menuitem value="Detalle" url="/faces/vistas/negocio/detalle.xhtml" />
+                            </p:submenu>
+                            <p:separator />
+                            <p:menuitem value="Quit" url="#" />
+                        </p:submenu>
+
+                        <p:submenu label="Edit" icon="ui-icon-pencil">
+                            <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
+                            <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+                        </p:submenu>
+
+                        <p:submenu label="Help" icon="ui-icon-help">
+                            <p:menuitem value="Contents" url="#" />
+                            <p:submenu label="Search" icon="ui-icon-search">
+                                <p:submenu label="Text">
+                                    <p:menuitem value="Workspace" url="#" />
+                                </p:submenu>
+                                <p:menuitem value="File" url="#" />
+                            </p:submenu>
+                        </p:submenu>
+
+                        <p:submenu label="Actions" icon="ui-icon-gear">
+                            <p:submenu label="Ajax" icon="ui-icon-refresh">
+                                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" />
+                                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" />
+                            </p:submenu>
+                            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+                                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close"  ajax="false"/>
+                            </p:submenu>
+                        </p:submenu>
+
+                        <p:menuitem value="Salir" actionListener="#{loginBean.logout}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/>                 
+
+                    </p:menubar>
+
+
+
+
+
+                </h:form> 
+            </div>
+            <div id="content" class="center_content ui-widget-content ui-corner-all">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+
+            <div id="bottom" class="  ui-widget-header ui-corner-all ">
+                <ui:insert name="bottom">&copy; All Rights Reserved 2017 - Rinnovo </ui:insert>
+            </div>
+
+        </div>
+        <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.loggedOut) {
 
-                     location.href= args.ruta;
+                    location.href = args.ruta;
                 }
             }
         </script>
