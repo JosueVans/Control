@@ -13,8 +13,13 @@ public interface PuestoDao {
     public List<Cargo> ListaCargo(int id);
     public List<Cargo> ListaCargos();
     public List<Rol> ListaRol();
-    public boolean CreateCargo(Cargo ca);
     public boolean CreateRol(Rol ro);
+    public boolean UpdateRol(Rol ro);
+    public boolean DeleteRol(int id);
+    public boolean CreateCargo(Cargo ca);
+    public boolean UpdateCargo(Cargo ca);
+     public boolean DeleteCargo(int id);
+    
     
     
 }

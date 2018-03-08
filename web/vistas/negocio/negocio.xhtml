@@ -1,19 +1,190 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 
     <body>
-
         <ui:composition template="./../template.xhtml">
-
             <ui:define name="content">
-                content
+                <p:growl id="msgs" showDetail="true" />
+                <h:form id="formDataTable" style=" height: 500px" >
+                    <p:dataTable id="us" var="negocio" value="#{negocioBean.listaNegocio}" scrollable="true" scrollHeight="375"
+                                 style="font-size: 14px; height: 425px" emptyMessage="No hay registros que mostrar">
+                        <f:facet name ="header">
+                            Listado de negocios
+                        </f:facet >
+                        <p:column headerText="Negocio">
+                            <h:outputText value="#{negocio.nombreNegocio}" />
+                        </p:column>
+                        <p:column headerText="Tipo de negocio">
+                            <h:outputText value="#{negocio.tipoNegocio.tipoNegocio}" />
+                        </p:column>
+                        <p:column headerText="Estado de negocio">
+                            <h:outputText value="#{negocio.estadoNegocio.estadoNegocio}" />
+                        </p:column>
+                        <p:column headerText="Oportunidad">
+                            <h:outputText value="#{negocio.oportunidades.oportunidad}" />
+                        </p:column>
+                        <p:column headerText="Fecha de inicio" >
+                            <h:outputText value="#{negocio.fechaIni}" />
+                        </p:column>
+                        <p:column headerText="Fecha de finalizacion">
+                            <h:outputText value="#{negocio.fechaFin}" />
+                        </p:column>
+                        <p:column headerText="Fecha de cierre">
+                            <h:outputText value="#{negocio.fechaCierreNegocio}" />
+                        </p:column>
+                        <p:column headerText="Precio ofertado">
+                            <h:outputText value="#{negocio.precioOfertaNegocio}"/>
+                        </p:column>
+                        <p:column headerText="Precio final">
+                            <h:outputText value="#{negocio.precioOfertaFinal}" />
+                        </p:column>
+                        <p:column headerText="Creado por">
+                            <h:outputText value="#{negocio.creadopor}" />
+                        </p:column>
+                        <p:column headerText="Fecha de Creacion">
+                            <h:outputText value="#{negocio.creaciondate}" />
+                        </p:column>
+                        <p:column headerText="Actualizado por">
+                            <h:outputText value="#{negocio.modificadopor}" />
+                        </p:column>
+                        <p:column headerText="Fecha de Modificacion">
+                            <h:outputText value="#{negocio.modificaciondate}" />
+                        </p:column>
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnUsuarioUpdate" update=":formUpdate" oncomplete="PF('dialogNegocioUpdate').show()" icon="ui-icon-pencil" title="Modificar">
+                                <f:setPropertyActionListener value="#{negocio}" target="#{negocioBean.selectedNegocio}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnUsuarioDelete" update=":formDelete" oncomplete="PF('dialogNegocioDelete').show()" icon="ui-icon-trash" title="Eliminar">
+                                <f:setPropertyActionListener value="#{negocio}" target="#{negocioBean.selectedNegocio}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>                    
+                </h:form>
+
+                <h:form id="formCreate">
+                    <p:dialog header="Crear Negocio" widgetVar="dialogNegocioCreate" id="dlgUsuarioCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px">
+                        <p:outputPanel id="DetalleUsuario" style="text-align: left">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Negocio:" />
+                                <p:inputText id="nom" title="Introduzca el nombre de negocio" value="#{negocioBean.selectedNegocio.nombreNegocio}" size="25" maxlength="50" required="true">
+                                 <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>  
+                                <h:outputText value="Tipo de negocio:" />
+                                <p:selectOneMenu id="selectTipo" value="#{negocioBean.selectedNegocio.tipoNegocio.idTipoNegocio}" style="width: 210px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{negocioBean.listaTipoN}" var="tipo" itemLabel="#{tipo.tipoNegocio}" itemValue="#{tipo.idTipoNegocio}"/>
+                                    <p:ajax process="selectTipo"/>
+                                </p:selectOneMenu>                                                                                            
+                                <h:outputText value="Estado de negocio"/>
+                                <p:selectOneMenu id="selectEstado" value="#{negocioBean.selectedNegocio.estadoNegocio.idEstadoNegocio}" style="width: 210px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{negocioBean.listaEstadoN}" var="estado" itemLabel="#{estado.estadoNegocio}" itemValue="#{estado.idEstadoNegocio}"/>
+                                    <p:ajax process="selectEstado"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Oportunidad:" />
+                                <p:selectOneMenu id="selectOportunidad" value="#{negocioBean.selectedNegocio.oportunidades.idOportunidad}" style="width:210px" required="true">
+                                    <f:selectItems value="#{negocioBean.listaOportunidades}" var="opor" itemLabel="#{opor.oportunidad}" itemValue="#{opor.idOportunidad}" />   
+                                    <p:ajax update="@this" />
+                                </p:selectOneMenu>    
+                                <p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+                                <p:calendar id="fechaIni" value="#{negocioBean.selectedNegocio.fechaIni}" effect="clip" required="true"/>
+                                <p:outputLabel for="fechaFin" value="Fecha de Finalizacion:" />
+                                <p:calendar id="fechaFin" value="#{negocioBean.selectedNegocio.fechaFin}" effect="clip" required="true"/>
+                                <p:outputLabel for="fechaCi" value="Fecha de Cierre de negocio" />
+                                <p:calendar id="fechaCi" value="#{negocioBean.selectedNegocio.fechaCierreNegocio}" effect="clip" required="true"/>               
+                                <p:outputLabel value="Precio de oferta" />                                  
+                                <p:inputNumber value="#{negocioBean.selectedNegocio.precioOfertaNegocio}" minValue="0.00" maxValue="10000.00">
+                                    <p:keyFilter regEx="/[\d\.\s,]"/>
+                                </p:inputNumber>
+                                <p:outputLabel value="Precio de oferta final" />                                  
+                                <p:inputNumber value="#{negocioBean.selectedNegocio.precioOfertaFinal}" minValue="0.00" maxValue="10000.00">
+                                    <p:keyFilter regEx="/[\d\.\s,]"/>
+                                </p:inputNumber>
+                                <f:facet name="footer">                                  
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogNegocioCreate').hide()" actionListener="#{negocioBean.createNegocio(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogNegocioCreate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                                <p:tooltip id="toolTipNombre" for="nom" showEvent="focus" hideEvent="blur" />
+                            </h:panelGrid>                                         
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formUpdate">
+                    <p:dialog header="Modificar Negocio" widgetVar="dialogNegocioUpdate" id="dlgUsuarioUpdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Negocio:" />
+                                <p:inputText id="nom" title="Introduzca el nombre de negocio" value="#{negocioBean.selectedNegocio.nombreNegocio}" size="25" maxlength="50" required="true"/>  
+                                <h:outputText value="Tipo de negocio:" />
+                                <p:selectOneMenu id="selectTipo" value="#{negocioBean.selectedNegocio.tipoNegocio.idTipoNegocio}" style="width: 210px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{negocioBean.listaTipoN}" var="tipo" itemLabel="#{tipo.tipoNegocio}" itemValue="#{tipo.idTipoNegocio}"/>
+                                    <p:ajax process="selectTipo"/>
+                                </p:selectOneMenu>                                                                                            
+                                <h:outputText value="Estado de negocio"/>
+                                <p:selectOneMenu id="selectEstado" value="#{negocioBean.selectedNegocio.estadoNegocio.idEstadoNegocio}" style="width: 210px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{negocioBean.listaEstadoN}" var="estado" itemLabel="#{estado.estadoNegocio}" itemValue="#{estado.idEstadoNegocio}"/>
+                                    <p:ajax process="selectEstado"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Oportunidad:" />
+                                <p:selectOneMenu id="selectOportunidad" value="#{negocioBean.selectedNegocio.oportunidades.idOportunidad}" style="width:210px" required="true">
+                                    <f:selectItems value="#{negocioBean.listaOportunidades}" var="opor" itemLabel="#{opor.oportunidad}" itemValue="#{opor.idOportunidad}" />   
+                                    <p:ajax update="@this" />
+                                </p:selectOneMenu> 
+                                <p:outputLabel for="fechaIni" value="Fecha de inicio:" />
+                                <p:calendar id="fechaIni" value="#{negocioBean.selectedNegocio.fechaIni}" effect="clip" required="true"/>
+                                <p:outputLabel for="fechaFin" value="Fecha de Finalizacion:" />
+                                <p:calendar id="fechaFin" value="#{negocioBean.selectedNegocio.fechaFin}" effect="clip" required="true"/>
+                                <p:outputLabel for="fechaCi" value="Fecha de Cierre de negocio" />
+                                <p:calendar id="fechaCi" value="#{negocioBean.selectedNegocio.fechaCierreNegocio}" effect="clip" required="true"/>
+                                <h:inputHidden value="#{negocioBean.selectedNegocio.idNegocio}"/>
+                                <f:facet name="footer">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogNegocioUpdate').hide()" actionListener="#{negocioBean.updateNegocio(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogNegocioUpdate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formDelete">
+                    <p:dialog header="Eliminar Negocio" widgetVar="dialogNegocioDelete" id="dlgNegocioDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+
+                                <h:outputText value="Nombre de negocio:" />
+                                <h:outputText value="#{negocioBean.selectedNegocio.nombreNegocio}"/>
+                                <h:inputHidden value="#{negocioBean.selectedNegocio.idNegocio}" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogNegocioDelete').hide()" actionListener="#{negocioBean.deleteNegocio(actionEvent)}" icon="ui-icon-disk" title="Eliminar" value="Eliminar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogNegocioDelete').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form style="font-size: 14px; height: 40px">
+                    <p:commandButton id="BtnUsuarioCreate" update=":formCreate"  oncomplete="PF('dialogNegocioCreate').show()" icon="ui-icon-plus" title="Crear" value="Crear negocio" style="font-size: 14p"/> 
+                    
+                </h:form>
+                
+
             </ui:define>
 
-            <ui:define name="bottom">
-                bottom
-            </ui:define>
+
 
         </ui:composition>
 

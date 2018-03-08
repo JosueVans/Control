@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Fase  implements java.io.Serializable {
 
 
-     private BigDecimal idFase;
+     private Integer idFase;
      private String fase;
      private Set<Oportunidades> oportunidadeses = new HashSet<Oportunidades>(0);
 
@@ -30,11 +30,9 @@ public class Fase  implements java.io.Serializable {
     }
 
 	
-    public Fase(BigDecimal idFase) {
-        this.idFase = idFase;
-    }
-    public Fase(BigDecimal idFase, String fase, Set<Oportunidades> oportunidadeses) {
-       this.idFase = idFase;
+    
+    public Fase(String fase, Set<Oportunidades> oportunidadeses) {
+      
        this.fase = fase;
        this.oportunidadeses = oportunidadeses;
     }
@@ -43,11 +41,11 @@ public class Fase  implements java.io.Serializable {
 
     
     @Column(name="ID_FASE", unique=true, nullable=false, precision=22, scale=0)
-    public BigDecimal getIdFase() {
+    public Integer getIdFase() {
         return this.idFase;
     }
     
-    public void setIdFase(BigDecimal idFase) {
+    public void setIdFase(Integer idFase) {
         this.idFase = idFase;
     }
 

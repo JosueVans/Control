@@ -29,7 +29,7 @@ import org.hibernate.annotations.NamedQuery;
 )
 public class TipoNegocio implements java.io.Serializable {
 
-    private int idTipoNegocio;
+    private Integer idTipoNegocio;
     private String tipoNegocio;
     private Set<Negocio> negocios = new HashSet<Negocio>(0);
 

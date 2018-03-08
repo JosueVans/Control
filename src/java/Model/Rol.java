@@ -48,7 +48,7 @@ public class Rol implements java.io.Serializable {
    
      @Id 
 
-    @SequenceGenerator(name = "seq", sequenceName = "SEC_ROL_INC")
+    @SequenceGenerator(name = "seq", sequenceName = "ROL_AUTO_INC")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     @Column(name="ID_ROL", unique=true, nullable=false, precision=22, scale=0)
      public Integer getIdRol() {

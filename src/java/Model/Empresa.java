@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Empresa  implements java.io.Serializable {
 
 
-     private BigDecimal idempresa;
+     private Integer idempresa;
      private Pais pais;
      private String nombreEmpresa;
      private Date creaciondate;
@@ -37,15 +37,11 @@ public class Empresa  implements java.io.Serializable {
      private Set<Oportunidades> oportunidadeses = new HashSet<Oportunidades>(0);
 
     public Empresa() {
+        this.pais=new Pais();
     }
 
-	
-    public Empresa(BigDecimal idempresa, Pais pais) {
-        this.idempresa = idempresa;
-        this.pais = pais;
-    }
-    public Empresa(BigDecimal idempresa, Pais pais, String nombreEmpresa, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor, Set<Oportunidades> oportunidadeses) {
-       this.idempresa = idempresa;
+    public Empresa(Pais pais, String nombreEmpresa, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor, Set<Oportunidades> oportunidadeses) {
+      
        this.pais = pais;
        this.nombreEmpresa = nombreEmpresa;
        this.creaciondate = creaciondate;
@@ -59,11 +55,11 @@ public class Empresa  implements java.io.Serializable {
 
     
     @Column(name="IDEMPRESA", unique=true, nullable=false, precision=22, scale=0)
-    public BigDecimal getIdempresa() {
+    public Integer getIdempresa() {
         return this.idempresa;
     }
     
-    public void setIdempresa(BigDecimal idempresa) {
+    public void setIdempresa(Integer idempresa) {
         this.idempresa = idempresa;
     }
 

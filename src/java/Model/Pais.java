@@ -22,7 +22,7 @@ import javax.persistence.Table;
 public class Pais  implements java.io.Serializable {
 
 
-     private BigDecimal idPais;
+     private Integer idPais;
      private String pais;
      private Set<Empresa> empresas = new HashSet<Empresa>(0);
 
@@ -30,11 +30,9 @@ public class Pais  implements java.io.Serializable {
     }
 
 	
-    public Pais(BigDecimal idPais) {
-        this.idPais = idPais;
-    }
-    public Pais(BigDecimal idPais, String pais, Set<Empresa> empresas) {
-       this.idPais = idPais;
+
+    public Pais(String pais, Set<Empresa> empresas) {
+      
        this.pais = pais;
        this.empresas = empresas;
     }
@@ -43,11 +41,11 @@ public class Pais  implements java.io.Serializable {
 
     
     @Column(name="ID_PAIS", unique=true, nullable=false, precision=22, scale=0)
-    public BigDecimal getIdPais() {
+    public Integer getIdPais() {
         return this.idPais;
     }
     
-    public void setIdPais(BigDecimal idPais) {
+    public void setIdPais(Integer idPais) {
         this.idPais = idPais;
     }
 

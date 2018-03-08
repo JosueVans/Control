@@ -13,7 +13,7 @@
             <ui:define name="content">
                 <p:growl id="msgs" showDetail="true" />
 
-                <h:form id="formDataTable" >
+                <h:form id="formDataTable" style=" height: 500px">
                     <p:dataTable id="us" var="empleado" value="#{empleadosBean.empleados}" scrollable="true" scrollHeight="450"
                                  style="font-size: 14px" emptyMessage="No hay registros que mostrar">
                         <f:facet name ="header">

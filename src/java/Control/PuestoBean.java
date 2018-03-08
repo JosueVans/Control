@@ -6,17 +6,20 @@ import DaoImpl.PuestoDaoImpl;
 import Model.Cargo;
 import Model.Rol;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
+
+import org.primefaces.event.RowEditEvent;
 
 @Named(value = "puestoBean")
-@RequestScoped
-public class PuestoBean {
+@ViewScoped
+public class PuestoBean implements Serializable {
 
     private int idRol;
     private int idCargo;
@@ -46,8 +49,8 @@ public class PuestoBean {
     }
 
     public List<Cargo> getListaCargos() {
-        PuestoDao puesto=new PuestoDaoImpl();
-        ListaCargos=puesto.ListaCargos();
+        PuestoDao puesto = new PuestoDaoImpl();
+        ListaCargos = puesto.ListaCargos();
         return ListaCargos;
     }
 
@@ -55,7 +58,6 @@ public class PuestoBean {
         this.ListaCargos = ListaCargos;
     }
 
-    
     public List<Cargo> getListaCargo() {
         PuestoDao puesto = new PuestoDaoImpl();
         ListaCargo = puesto.ListaCargo(idRol);
@@ -63,10 +65,16 @@ public class PuestoBean {
     }
 
     public Cargo getSelectedCargo() {
+        if (selectedCargo == null) {
+            selectedCargo = new Cargo();
+        }
         return selectedCargo;
     }
 
     public Rol getSelectedRol() {
+        if (selectedRol == null) {
+            selectedRol = new Rol();
+        }
         return selectedRol;
     }
 
@@ -94,12 +102,10 @@ public class PuestoBean {
         this.selectedRol = selectedRol;
     }
 
-    public void createCargo(ActionEvent actionEvent) {
-        CargoDao cargoDao = new CargoDao();
+    public void createRol(ActionEvent actionEvent) {
+        PuestoDao rolDao = new PuestoDaoImpl();
         String msg;
-        System.out.printf("el cargo" + this.selectedCargo.getCargo());
-
-        if (cargoDao.create(this.selectedCargo)) {
+        if (rolDao.CreateRol(selectedRol)) {
             msg = "Se creó exitosamente el registro";
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -108,7 +114,117 @@ public class PuestoBean {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+
+    public void onEditEventRol(RowEditEvent event) {
+        PuestoDao rolDao = new PuestoDaoImpl();
+        String msg;
+        System.out.printf("rol " +((Rol) event.getObject()).getIdRol());
+         System.out.printf("rol nombre" +((Rol) event.getObject()).getNombre());
+          System.out.printf("rol " +this.selectedRol.getNombre());
+         rolDao.UpdateRol((Rol) event.getObject());
+         //  rolDao.UpdateRol(this.selectedRol);
+        //this.selectedRol.setIdRol(((Rol) event.getObject()).getIdRol());
+        //this.selectedRol.setNombre(((Rol) event.getObject()).getNombre());
+        /*if (rolDao.UpdateRol(selectedRol)) {
+                msg = "Se actualizó exitosamente el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                msg = "Error, no se pudo crear el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }*/
+    }
+
+    public void onCancel() {
+        String msg;
+        msg = "Se cancelo";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    
+         public void updateRol(ActionEvent actionEvent) {
+         PuestoDao rolDao = new PuestoDaoImpl();
+        
+        String msg;
+      
+            if (rolDao.UpdateRol(selectedRol)) {
+                msg = "Se actualizó exitosamente el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                msg = "Error, no se pudo crear el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+       
+    }
+    public void deleteRol(ActionEvent actionEvent) {
+        PuestoDao rolDao = new PuestoDaoImpl();
+        String msg;
+        System.out.printf("rol " + this.selectedRol.getIdRol());
+        if (rolDao.DeleteRol(this.selectedRol.getIdRol())) {
+            msg = "Se Eliminó exitosamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error, no se pudo eliminar el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
 
     }
 
+    public void createCargo(ActionEvent actionEvent) {
+        PuestoDao cargoDao = new PuestoDaoImpl();
+        String msg;
+        if (cargoDao.CreateCargo(this.selectedCargo)) {
+            msg = "Se creó exitosamente el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } else {
+            msg = "Error, no se pudo crear el registro";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+
+    /* public void updateCargo(ActionEvent actionEvent) {
+        EmpleadosDao empleadosDao = new EmpleadosDaoImpl();
+        UsuarioDao usuarioDao = new UsuarioDao();
+        String msg;
+        if (usuarioDao.update(this.selectedEmpleado.getUsuarios())) {
+            this.selectedEmpleado.setModificaciondate(fecha());
+            if (empleadosDao.Update(this.selectedEmpleado)) {
+                msg = "Se actualizó exitosamente el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                msg = "Error, no se pudo crear el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        }
+    }
+
+    public void deleteCargo(ActionEvent actionEvent) {
+        EmpleadosDao empleadosDao = new EmpleadosDaoImpl();
+        UsuarioDao usuarioDao = new UsuarioDao();
+        String msg;
+        this.selectedUsuario = this.selectedEmpleado.getUsuarios();
+        if (empleadosDao.Delete(this.selectedEmpleado.getIdEmpleado())) {
+            if (usuarioDao.elimina(this.selectedUsuario.getUserId())) {
+                msg = "Se Eliminó exitosamente el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                msg = "Error, no se pudo eliminar el registro";
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+        }
+    }
+     */
 }

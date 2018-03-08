@@ -1,8 +1,6 @@
 package Control;
 
 import Dao.EmpleadosDao;
-import Dao.PuestoDao;
-import DaoImpl.PuestoDaoImpl;
 import Dao.UsuarioDao;
 import DaoImpl.PuestoDaoImpl;
 import Model.Cargo;
@@ -17,9 +15,7 @@ import java.util.List;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-//import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;

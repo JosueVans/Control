@@ -13,6 +13,8 @@
         <title>Rinnovo Customer Relationship Management</title>
     </h:head>
 
+
+
     <h:body>
         <div id="container">
             <div id="top" class="ui-widget-header ui-corner-all">
@@ -27,8 +29,8 @@
                         <p:menuitem icon="ui-icon-document" style="font-size: 12px">
                             <f:param name="i" value="2" />
                         </p:menuitem>
-                        <p:menuitem value="#{loginBean.usuario.nomUsuario}" icon="ui-icon-person" style="font-size: 12px">
-                            <f:param name="i" value="3" />
+                        <p:menuitem value="#{loginBean.usuario.nomUsuario}" onclick="PF('info').show();" icon="ui-icon-person" style="font-size: 12px">
+                            <f:param name="i" value="3"  />
                         </p:menuitem>
                         <p:menuitem icon="ui-icon-wrench" style="font-size: 12px">
                             <f:param name="i" value="4" />
@@ -37,16 +39,36 @@
                 </h:form> 
             </div>
 
+            <h:form >
+                <p:dialog header="Informacion de Usuario" widgetVar="info" id="dlgUsuarioUpdate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style=" font-size: 12px">
+                    <p:outputPanel id="carDetail" style="text-align: left">
+                        <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >    
+                            <h:outputText value="" style=" color: #045491"/>
+                            <h:outputText value="#{sesionInfoBean.info}" style=" color: #045491; animation-duration: 2s"/>
+                            <h:outputText value="" style=" color: #045491"/>
+                            <h:outputText value="#{sesionInfoBean.empleado.usuarios.correo}" style=" color: #045491"/> 
+
+                        </h:panelGrid>
+                        <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">    
+
+                            <p:menubar>
+                                <p:menuitem value="Cerrar Sesion" actionListener="#{loginBean.logout}" icon="ui-icon-close" oncomplete="handleLoginRequest(xhr, status, args)"/> 
+                            </p:menubar>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </p:dialog>
+            </h:form>
 
 
             <div id="menu" class="ui-menu ui-menubar ui-widget ui-widget-content ui-corner-all ui-helper-clearfix">
                 <h:form>  
                     <p:menubar>
                         <p:submenu label="Catalogo" icon="ui-icon-document" >
-                            <p:menuitem value="Integrantes de la Fuerza de Venta" url="/faces/vistas/usuario/index.xhtml" />
+                            <p:menuitem value="Integrantes de Venta" url="/faces/vistas/usuario/index.xhtml" icon="ui-icon-contact"/>                         
                             <p:submenu label="Puesto">                               
                                 <p:menuitem value="Asignacion de Cargo" url="/faces/vistas/puesto/puesto.xhtml" />                               
                             </p:submenu>
+                            <p:separator />
                             <p:submenu label="Negocio">
                                 <p:menuitem value="Negocio" url="/faces/vistas/negocio/negocio.xhtml" />
                                 <p:menuitem value="Tipo" url="/faces/vistas/negocio/tipo.xhtml" />
@@ -54,9 +76,9 @@
                                 <p:menuitem value="Detalle" url="/faces/vistas/negocio/detalle.xhtml" />
                             </p:submenu>
                             <p:separator />
-                            <p:menuitem value="Quit" url="#" />
+                            <p:menuitem value="Cliente" url="/faces/vistas/negocio/negocio.xhtml" icon="ui-icon-plusthick" />
+                            <p:separator />                           
                         </p:submenu>
-
                         <p:submenu label="Edit" icon="ui-icon-pencil">
                             <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
                             <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />

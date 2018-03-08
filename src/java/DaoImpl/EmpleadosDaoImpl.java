@@ -1,13 +1,16 @@
 package DaoImpl;
 
 import Dao.EmpleadosDao;
+import Model.Cargo;
 import Model.Empleados;
+import Model.Usuarios;
 //import Model.Usuarios;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 
 public class EmpleadosDaoImpl implements EmpleadosDao {
@@ -102,6 +105,27 @@ public class EmpleadosDaoImpl implements EmpleadosDao {
             sesion.close();
         }
         return flag;
+    }
+
+    @Override
+    public Empleados Search(int id) throws HibernateException {
+      Empleados emp=null;
+        try {
+            IniciaSesion();
+            Criteria criteria = sesion.createCriteria(Empleados.class);
+            criteria.add(Restrictions.eq("usuarios.userId", id));
+            emp=(Empleados) criteria.uniqueResult();
+            
+            
+        } catch (HibernateException he) {
+            
+            ManejaException(he);          
+        } finally {
+           // sesion.close();
+        }
+        return emp;  
+        
+        
     }
 
 }

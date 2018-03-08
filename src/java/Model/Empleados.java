@@ -42,11 +42,9 @@ public class Empleados implements java.io.Serializable {
     private Date modificaciondate;
     private String creadopor;
     private String modificadopor;
-    // private Cargo cargo;
-    // private Usuarios usuarios;
+ ;
 
     public Empleados() {
-        //this.idEmpleado = 0;
         this.cargo = new Cargo();
         this.usuarios = new Usuarios();
 

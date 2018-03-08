@@ -2,7 +2,6 @@ package Model;
 // Generated 01-31-2018 04:23:42 PM by Hibernate Tools 4.3.1
 
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -24,23 +23,18 @@ import javax.persistence.Table;
 public class Oportunidades  implements java.io.Serializable {
 
 
-     private BigDecimal idOportunidad;
+     private Integer idOportunidad;
      private Empresa empresa;
      private Fase fase;
      private String oportunidad;
      private Set<Negocio> negocios = new HashSet<Negocio>(0);
 
     public Oportunidades() {
+        this.empresa=new Empresa();
     }
 
-	
-    public Oportunidades(BigDecimal idOportunidad, Empresa empresa, Fase fase) {
-        this.idOportunidad = idOportunidad;
-        this.empresa = empresa;
-        this.fase = fase;
-    }
-    public Oportunidades(BigDecimal idOportunidad, Empresa empresa, Fase fase, String oportunidad, Set<Negocio> negocios) {
-       this.idOportunidad = idOportunidad;
+    public Oportunidades(Empresa empresa, Fase fase, String oportunidad, Set<Negocio> negocios) {
+      // this.idOportunidad = idOportunidad;
        this.empresa = empresa;
        this.fase = fase;
        this.oportunidad = oportunidad;
@@ -51,11 +45,11 @@ public class Oportunidades  implements java.io.Serializable {
 
     
     @Column(name="ID_OPORTUNIDAD", unique=true, nullable=false, precision=22, scale=0)
-    public BigDecimal getIdOportunidad() {
+    public Integer getIdOportunidad() {
         return this.idOportunidad;
     }
     
-    public void setIdOportunidad(BigDecimal idOportunidad) {
+    public void setIdOportunidad(Integer idOportunidad) {
         this.idOportunidad = idOportunidad;
     }
 

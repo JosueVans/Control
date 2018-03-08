@@ -115,5 +115,80 @@ List<Cargo> car = null;
         return flag;
     }
 
+    @Override
+    public boolean UpdateRol(Rol ro) {
+      boolean flag;
+        try {
+            IniciaSesion();
+            Rol rol=(Rol) sesion.load(Rol.class, ro.getIdRol());
+            rol.setNombre(ro.getNombre());
+            sesion.update(rol);
+            tx.commit();
+            flag = true;
+        } catch (HibernateException he) {
+           flag = false;
+            ManejaException(he);
+         } finally {
+            sesion.close();
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean DeleteRol(int id) {
+       boolean flag;
+        try {
+            IniciaSesion();
+            Rol rol=(Rol) sesion.load(Rol.class, id);
+            sesion.delete(rol);
+            tx.commit();
+            flag = true;
+        } catch (HibernateException he) {
+            flag = false;
+            ManejaException(he);          
+        } finally {
+            sesion.close();
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean UpdateCargo(Cargo ca) {
+       boolean flag;
+        try {
+            IniciaSesion();
+            Cargo cargo=(Cargo)sesion.load(Cargo.class, ca.getIdCargo());
+            cargo.setCargo(ca.getCargo());
+            cargo.setRol(ca.getRol());        
+            sesion.update(cargo);
+            tx.commit();
+            flag = true;
+        } catch (HibernateException he) {
+           flag = false;
+            ManejaException(he);
+         } finally {
+            sesion.close();
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean DeleteCargo(int id) {
+      boolean flag;
+        try {
+            IniciaSesion();
+            Cargo cargo=(Cargo) sesion.load(Cargo.class, id);
+            sesion.delete(cargo);
+            tx.commit();
+            flag = true;
+        } catch (HibernateException he) {
+            flag = false;
+            ManejaException(he);          
+        } finally {
+            sesion.close();
+        }
+        return flag;
+    }
+
     
 }

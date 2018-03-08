@@ -40,14 +40,14 @@
                                 
                             <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
                                 <h:outputText value="Estado de Negocio:" />
-                                <p:inputText id="nom" title="Introduzca el estado de negocio" value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25"/>  
+                                <p:inputText id="Estado_Negocio" title="Introduzca el estado de negocio" value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25" required="true"/>  
                                                         
                                 <f:facet name="footer">
                                    
                                     <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogEstadoNegocioCreate').hide()" actionListener="#{estadoNegocioBean.createEstadoNegocio(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
                                     <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogEstadoNegocioCreate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
                                 </f:facet>
-                                <p:tooltip id="toolTipNombre" for="nom" showEvent="focus" hideEvent="blur" />
+                                <p:tooltip id="toolTipNombre" for="Estado_Negocio" showEvent="focus" hideEvent="blur" />
                                 
                             </h:panelGrid>     
                         </p:outputPanel>
@@ -59,7 +59,7 @@
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
                                 <h:outputText value="Estado de negocio:" />
-                                <p:inputText value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25"/>
+                                <p:inputText  id="Estado_Negocio" value="#{estadoNegocioBean.selectedEstadoNegocio.estadoNegocio}" size="25" required="true"/>
                                 <h:inputHidden value="#{estadoNegocioBean.selectedEstadoNegocio.idEstadoNegocio}" />
                                 <f:facet name="footer">
                                     <p:separator/>

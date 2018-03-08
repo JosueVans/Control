@@ -43,13 +43,13 @@ public class loginBean implements Serializable {
         FacesMessage message;
         boolean loggedIn;
         String ruta = "";
-        SesionBean rol =new SesionBean();
+       // SesionBean rol =new SesionBean();
         this.usuario = this.usuarioDao.login(this.usuario);
         if (this.usuario != null) {
             loggedIn = true;
            
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.usuario.getNomUsuario());
-            
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userId", this.usuario.getUserId());
                          
            //rol.rol();
             ruta = MyUtil.basePathLogin() + "vistas/inicio.xhtml";

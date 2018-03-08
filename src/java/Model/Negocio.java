@@ -7,9 +7,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +27,7 @@ import javax.persistence.TemporalType;
 public class Negocio  implements java.io.Serializable {
 
 
-     private BigDecimal idNegocio;
+     private Integer idNegocio;
      private EstadoNegocio estadoNegocio;
      private Oportunidades oportunidades;
      private TipoNegocio tipoNegocio;
@@ -40,17 +43,15 @@ public class Negocio  implements java.io.Serializable {
      private String modificadopor;
 
     public Negocio() {
+        this.estadoNegocio=new EstadoNegocio();
+        this.oportunidades=new Oportunidades();
+        this.tipoNegocio =new TipoNegocio();
     }
 
 	
-    public Negocio(BigDecimal idNegocio, EstadoNegocio estadoNegocio, Oportunidades oportunidades, TipoNegocio tipoNegocio) {
-        this.idNegocio = idNegocio;
-        this.estadoNegocio = estadoNegocio;
-        this.oportunidades = oportunidades;
-        this.tipoNegocio = tipoNegocio;
-    }
-    public Negocio(BigDecimal idNegocio, EstadoNegocio estadoNegocio, Oportunidades oportunidades, TipoNegocio tipoNegocio, Date fechaIni, Date fechaFin, BigDecimal precioOfertaNegocio, BigDecimal precioOfertaFinal, String nombreNegocio, Date fechaCierreNegocio, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor) {
-       this.idNegocio = idNegocio;
+    
+    public Negocio(EstadoNegocio estadoNegocio, Oportunidades oportunidades, TipoNegocio tipoNegocio, Date fechaIni, Date fechaFin, BigDecimal precioOfertaNegocio, BigDecimal precioOfertaFinal, String nombreNegocio, Date fechaCierreNegocio, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor) {
+       
        this.estadoNegocio = estadoNegocio;
        this.oportunidades = oportunidades;
        this.tipoNegocio = tipoNegocio;
@@ -67,14 +68,14 @@ public class Negocio  implements java.io.Serializable {
     }
    
      @Id 
-
-    
+    @SequenceGenerator(name = "seq", sequenceName = "NEGOCIO_AUTO_INC")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     @Column(name="ID_NEGOCIO", unique=true, nullable=false, precision=22, scale=0)
-    public BigDecimal getIdNegocio() {
+    public Integer getIdNegocio() {
         return this.idNegocio;
     }
     
-    public void setIdNegocio(BigDecimal idNegocio) {
+    public void setIdNegocio(Integer idNegocio) {
         this.idNegocio = idNegocio;
     }
 

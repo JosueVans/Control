@@ -1,7 +1,7 @@
 package Model;
 // Generated 01-09-2018 11:33:30 AM by Hibernate Tools 4.3.1
 
-import java.math.BigDecimal;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ import org.hibernate.annotations.NamedQuery;
 )
 public class EstadoNegocio implements java.io.Serializable {
 
-    private int idEstadoNegocio;
+    private Integer idEstadoNegocio;
     private String estadoNegocio;
     private Set<Negocio> negocios = new HashSet<Negocio>(0);
 
