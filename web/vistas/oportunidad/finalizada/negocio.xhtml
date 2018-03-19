@@ -92,8 +92,9 @@
                                 </p:selectOneMenu>
                                 <h:outputText value="Oportunidad:" />
                                 <p:selectOneMenu id="selectOportunidad" value="#{negocioBean.selectedNegocio.oportunidades.idOportunidad}" style="width:210px" required="true">
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                     <f:selectItems value="#{negocioBean.listaOportunidades}" var="opor" itemLabel="#{opor.oportunidad}" itemValue="#{opor.idOportunidad}" />   
-                                    <p:ajax update="@this" />
+                                    <p:ajax process="selectOportunidad" />
                                 </p:selectOneMenu>    
                                 <p:outputLabel for="fechaIni" value="Fecha de inicio:" />
                                 <p:calendar id="fechaIni" value="#{negocioBean.selectedNegocio.fechaIni}" effect="clip" required="true"/>
@@ -139,6 +140,7 @@
                                 </p:selectOneMenu>
                                 <h:outputText value="Oportunidad:" />
                                 <p:selectOneMenu id="selectOportunidad" value="#{negocioBean.selectedNegocio.oportunidades.idOportunidad}" style="width:210px" required="true">
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                     <f:selectItems value="#{negocioBean.listaOportunidades}" var="opor" itemLabel="#{opor.oportunidad}" itemValue="#{opor.idOportunidad}" />   
                                     <p:ajax update="@this" />
                                 </p:selectOneMenu> 

@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import Dao.PuestoDao;
 import DaoImpl.EmpleadosDaoImpl;
-//import javax.faces.view.ViewScoped;
+import DaoImpl.UsuarioDaoImpl;
 
 @Named(value = "empleadosBean")
 @ViewScoped
@@ -119,7 +119,7 @@ public class EmpleadosBean implements Serializable {
     }
 
     public List<Usuarios> getUsuarios() {
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
         this.usuarios = usuarioDao.BuscarTodos();
         return usuarios;
     }
@@ -153,7 +153,7 @@ public class EmpleadosBean implements Serializable {
 
     public void createEmpleados(ActionEvent actionEvent) {
         EmpleadosDao empleadosDao = new EmpleadosDaoImpl();
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg, nombre;
         this.selectedEmpleado.setNombre(this.selectedUsuario.getNomUsuario().toLowerCase());
         nombre = this.selectedUsuario.getNomUsuario().toLowerCase().charAt(0) + this.selectedEmpleado.getApellido().toLowerCase();
@@ -178,7 +178,7 @@ public class EmpleadosBean implements Serializable {
 
     public void updateEmpleados(ActionEvent actionEvent) {
         EmpleadosDao empleadosDao = new EmpleadosDaoImpl();
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
         if (usuarioDao.update(this.selectedEmpleado.getUsuarios())) {
             this.selectedEmpleado.setModificaciondate(fecha());
@@ -196,7 +196,7 @@ public class EmpleadosBean implements Serializable {
 
     public void deleteEmpleado(ActionEvent actionEvent) {
         EmpleadosDao empleadosDao = new EmpleadosDaoImpl();
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
         String msg;
         this.selectedUsuario = this.selectedEmpleado.getUsuarios();
         if (empleadosDao.Delete(this.selectedEmpleado.getIdEmpleado())) {
@@ -231,7 +231,7 @@ public class EmpleadosBean implements Serializable {
     }
 
     public boolean compararCorreo() {
-        UsuarioDao usuarioDao = new UsuarioDao();
+        UsuarioDao usuarioDao = new UsuarioDaoImpl();
         boolean flag;
         String msg;
         if (usuarioDao.buscarPorCorreo(this.selectedUsuario) != null) {

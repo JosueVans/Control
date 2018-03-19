@@ -1,4 +1,3 @@
-
 package Dao;
 
 import Model.EstadoNegocio;

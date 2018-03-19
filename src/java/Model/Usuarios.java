@@ -1,10 +1,7 @@
 package Model;
-// Generated 12-12-2017 03:23:15 PM by Hibernate Tools 4.3.1
 
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,59 +20,44 @@ import org.hibernate.annotations.NamedQuery;
 )
 @NamedQueries(
         {
-            @NamedQuery(name = "Usuarios.buscarTodos", query = "SELECT d FROM Usuarios d"), // @NamedQuery(name="Usuarios.buscarPorId", query ="SELECT d FROM Usuarios d WHERE d.idDep= :idDep"),
-            @NamedQuery(name = "Usuarios.buscarPorCorreo", query= "SELECT d FROM Usuarios d WHERE d.correo= :correo")
+            @NamedQuery(name = "Usuarios.buscarTodos", query = "SELECT d FROM Usuarios d")
+            , // @NamedQuery(name="Usuarios.buscarPorId", query ="SELECT d FROM Usuarios d WHERE d.idDep= :idDep"),
+            @NamedQuery(name = "Usuarios.buscarPorCorreo", query = "SELECT d FROM Usuarios d WHERE d.correo= :correo")
         }
 )
 public class Usuarios implements java.io.Serializable {
-    
-    private int userId;
+
+    private Integer userId;
     private String nomUsuario;
     private String password;
-    private String estado;
     private String correo;
-    private Empleados empleados;
+    private String estado;
     private Set<Empleados> empleadoses = new HashSet<Empleados>(0);
 
     public Usuarios() {
-        //this.userId=0;
-        //this.empleados = new Empleados();
     }
-  
+
     public Usuarios(String nomUsuario, String password, String correo, String estado, Set<Empleados> empleadoses) {
-        //this.userId = userId;
         this.nomUsuario = nomUsuario;
-        this.password = password; 
+        this.password = password;
         this.correo = correo;
         this.estado = estado;
         this.empleadoses = empleadoses;
     }
-    
-    
-    
+
     @Id
-    @SequenceGenerator(name="seq", sequenceName="USUARIO_AUTO_INC")
-    @GeneratedValue(strategy= GenerationType.AUTO, generator="seq")
+    @SequenceGenerator(name = "seq", sequenceName = "USUARIO_AUTO_INC")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
     @Column(name = "USER_ID", unique = true, nullable = false, precision = 22, scale = 0)
     public Integer getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    @Column(name = "ESTADO", length = 5)
-    public String getEstado() {
-        return this.estado;
-    }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-    
-    
-    
     @Column(name = "NOM_USUARIO", length = 200)
     public String getNomUsuario() {
         return this.nomUsuario;
@@ -94,7 +76,6 @@ public class Usuarios implements java.io.Serializable {
         this.password = password;
     }
 
-    
     @Column(name = "CORREO", length = 50)
     public String getCorreo() {
         return this.correo;
@@ -104,7 +85,16 @@ public class Usuarios implements java.io.Serializable {
         this.correo = correo;
     }
 
-    @OneToMany( fetch = FetchType.LAZY, mappedBy = "usuarios")
+    @Column(name = "ESTADO", length = 5)
+    public String getEstado() {
+        return this.estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
     public Set<Empleados> getEmpleadoses() {
         return this.empleadoses;
     }

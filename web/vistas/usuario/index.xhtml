@@ -77,7 +77,7 @@
                                             <p:ajax process="selectRol" update="selectCargo"/>
                                         </p:selectOneMenu>
                                         <h:outputText value="Cargo:" />
-                                        <p:selectOneMenu id="selectCargo" value="#{empleadosBean.selectedEmpleado.cargo.idCargo}" style="width:210px" disabled="#{empleadosBean.idRol eq null or empleadosBean.idRol eq 0}">
+                                        <p:selectOneMenu id="selectCargo" value="#{empleadosBean.selectedEmpleado.cargo.idCargo}" style="width:210px" disabled="#{empleadosBean.idRol eq null or empleadosBean.idRol eq 0}" >
                                             <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
                                             <f:selectItems value="#{empleadosBean.listaCargoPorRol}" var="cargo" itemLabel="#{cargo.cargo}" itemValue="#{cargo.idCargo}" />   
                                          <p:ajax event="change" update="@this" />

@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form id="formDataTable" style=" height: 500px" >
+                    <p:dataTable id="us" var="cliente" value="#{clienteBean.listaCliente}" scrollable="true" scrollHeight="375"
+                                 style="font-size: 14px; height: 425px" emptyMessage="No hay registros que mostrar" >
+                        <f:facet name ="header">
+                            Listado de clientes
+                        </f:facet >
+                        <p:column headerText="Nombre:" filterBy="#{cliente.nombreCliente}"   filterMatchMode="contains" >
+                            <h:outputText value="#{cliente.nombreCliente}" />
+                        </p:column>
+                        <p:column headerText="Empresa:">
+                            <h:outputText value="#{cliente.empresa.nombreEmpresa}" />
+                        </p:column>
+                        <p:column headerText="Categoria">
+                            <h:outputText value="#{cliente.categoriaCliente.categoriaCliente}" />
+                        </p:column>
+                        <p:column headerText="Tipo">
+                            <h:outputText value="#{cliente.tipoCliente.tipoCliente}" />
+                        </p:column>
+                        <p:column headerText="Sector">
+                            <h:outputText value="#{cliente.sectorEconomico.sectorEconomico}" />
+                        </p:column>
+                        <p:column headerText="Rubro">
+                            <h:outputText value="#{cliente.rubroCliente.rubroCliente}" />
+                        </p:column>
+                        <p:column headerText="Responsable">
+                            <h:outputText value="#{cliente.creadopor}" />
+                        </p:column>
+
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnClienteUpdate" update="" oncomplete="PF('dialogClienteUpdate').show()" icon="ui-icon-pencil" title="Modificar">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnClienteDelete" update=":formDelete" oncomplete="PF('dialogClienteDelete').show()" icon="ui-icon-trash" title="Eliminar">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width: 4%">
+                            <p:commandButton id="BtnClienteOption" update="" oncomplete="PF('dialogClienteOption').show()" icon="ui-icon-gear" title="Ajustes">
+                                <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.selectedCliente}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>                    
+                </h:form>
+
+                <h:form id="formCreate">
+                    <p:dialog header="Crear Cliente" widgetVar="dialogClienteCreate" id="dlgClienteCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px" >
+                        <p:outputPanel id="DetalleCliente" style="text-align: left">
+
+                            <h:panelGrid  columns="4" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Nombre:" />
+                                <p:inputText id="nom" value="#{clienteBean.selectedCliente.nombreCliente}" size="25" maxlength="50" required="true">
+                                    <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>   
+                                <h:outputText value="Apellido:" />
+                                <p:inputText id="apel" value="#{clienteBean.selectedCliente.apellido}" size="25" maxlength="50" required="true">
+                                    <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>      
+                                <h:outputText value="Pais"/>
+                                <p:selectOneMenu id="selectPais" value="#{clienteBean.idPais}" style="width: 190px"  required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaPais}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.idPais}"/>
+                                    <p:ajax process="selectPais" update="selectEmpresa"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Empresa:" />
+                                <p:selectOneMenu id="selectEmpresa" value="#{clienteBean.selectedCliente.empresa.idempresa}" style="width:190px"  required="true" disabled="#{clienteBean.idPais eq null or clienteBean.idPais eq 0}">
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaEmpresaPorPais}" var="empresa" itemLabel="#{empresa.nombreEmpresa}" itemValue="#{empresa.idempresa}" />   
+                                    <p:ajax event="change" update="@this" />
+                                </p:selectOneMenu>
+                                <h:outputText value="Telefono:" />
+                                <p:inputMask id="tel" value="#{clienteBean.selectedCliente.telefono}" mask="9999-9999" size="25" required="true"/>     
+                                <h:outputText value="E-Mail:" />
+                                <p:inputText id="email" title="Introduzca un correo" value="#{clienteBean.selectedCliente.email}" size="25" maxlength="50" required="true">
+                                    <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                                </p:inputText> 
+                            </h:panelGrid>                        
+                            <p:separator/>
+                            <h:panelGrid  columns="4" style="margin:0 auto;" cellpadding="3" >                
+                                <h:outputText value="Categoria:" />
+                                <p:selectOneMenu id="selectCategoriaCliente" value="#{clienteBean.selectedCliente.categoriaCliente.idCategoriaCliente}" style="width: 190px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaCategoriaCliente}" var="categoria" itemLabel="#{categoria.categoriaCliente}" itemValue="#{categoria.idCategoriaCliente}"/>
+                                    <p:ajax process="selectCategoriaCliente"/>
+                                </p:selectOneMenu> 
+                                <h:outputText value="Tipo:" />
+                                <p:selectOneMenu id="selectTipoCliente" value="#{clienteBean.selectedCliente.tipoCliente.idTipoCliente}" style="width: 190px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaTipoCliente}" var="tipo" itemLabel="#{tipo.tipoCliente}" itemValue="#{tipo.idTipoCliente}"/>
+                                    <p:ajax process="selectTipoCliente"/>
+                                </p:selectOneMenu>                                                                                           
+                                <h:outputText value="Sector económico:" />
+                                <p:selectOneMenu id="selectSectorEconomico" value="#{clienteBean.selectedCliente.sectorEconomico.idSectorEconomico}" style="width: 190px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaSectorEconomico}" var="sector" itemLabel="#{sector.sectorEconomico}" itemValue="#{sector.idSectorEconomico}"/>
+                                    <p:ajax process="selectSectorEconomico"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Rubro:" />
+                                <p:selectOneMenu id="selectRubro" value="#{clienteBean.selectedCliente.rubroCliente.idRubrocliente}" style="width: 190px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaRubroCliente}" var="rubro" itemLabel="#{rubro.rubroCliente}" itemValue="#{rubro.idRubrocliente}"/>
+                                    <p:ajax process="selectRubro"/>
+                                </p:selectOneMenu>
+                                <h:outputText value="Estado:" />
+                                <p:selectOneRadio id="city2" value="#{clienteBean.selectedCliente.estadoCliente.idEstadoCliente}" columns="3">
+                                    <f:selectItems value="#{clienteBean.listaEstadoCliente}" var="estado" itemLabel="#{estado.estadoCliente}" itemValue="#{estado.idEstadoCliente}"/>
+                                </p:selectOneRadio> 
+                            </h:panelGrid>
+                            <h:panelGrid  columns="2" style="margin:0 auto" cellpadding="3">
+                                <h:panelGrid  columns="1"  cellpadding="3">
+                                    <p:commandButton value="Reset" type="reset" title="Reset" style="font-size: 14px" />
+                                </h:panelGrid>
+                                <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" actionListener="#{clienteBean.createCliente(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogClienteCreate').hide()" actionListener="#{clienteBean.clean()}" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>                                 
+                                </h:panelGrid>                      
+                                <p:tooltip id="toolTipNombre" for="nom" value="Nombre de nuevo cliente" showEffect="clip" hideEffect="fade" trackMouse="true" style="font-size: 12px"/>
+                                <p:tooltip id="toolTipApellido" for="apel" value="Apellido de nuevo cliente" showEffect="clip" hideEffect="fade" trackMouse="true" style="font-size: 12px"/>
+                                <p:tooltip id="toolTipEmail" for="email" value="Correo de cliente, ejemplo: nombre@empresa.com"  showEffect="clip" hideEffect="fade" trackMouse="true" style="font-size: 12px"/>
+                                <p:tooltip id="toolTipTelefono" for="tel" value="Telefono de cliente, ejemplo: 9999-9999"  showEffect="clip" hideEffect="fade" trackMouse="true" style="font-size: 12px"/>
+                            </h:panelGrid>                                         
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formDelete">
+                    <p:dialog header="Eliminar cliente" widgetVar="dialogClienteDelete" id="dlgClienteDelete" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+
+                                <h:outputText value="Nombre:" />
+                                <h:outputText value="#{clienteBean.selectedCliente.nombreCliente}"/>
+                                <h:outputText value="Empresa:" />
+                                <h:outputText value="#{clienteBean.selectedCliente.empresa.nombreEmpresa}"/>
+                                <h:outputText value="Reponsable:" />
+                                <h:outputText value="#{clienteBean.selectedCliente.creadopor}"/>
+                                <h:inputHidden value="#{clienteBean.selectedCliente.idCliente}" />
+                                <h:inputHidden value="#{clienteBean.selectedCliente.empresa.idempresa}" />
+                                <f:facet name="footer">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" oncomplete="PF('dialogClienteDelete').hide()" actionListener="#{clienteBean.deleteCliente(actionEvent)}" icon="ui-icon-disk" title="Eliminar" value="Eliminar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogClienteDelete').hide()" actionListener="#{clienteBean.clean()}" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formCreateEmpresa">
+                    <p:dialog header="Crear Empresa" widgetVar="dialogEmpresaCreate" id="dlgEmpresaCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px" >
+                        <p:outputPanel id="DetalleEmpresa" style="text-align: left" layout="responsive">
+
+
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <p:outputLabel value="Empresa:" for="emp"/>
+                                <p:autoComplete id="emp" minQueryLength="3" value="#{clienteBean.selectedEmpresa.nombreEmpresa}" completeMethod="#{clienteBean.completeList(query)}" effect="fade" required="true">
+                                    <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:autoComplete>
+                                <h:outputText value="Pais:" />
+                                <p:selectOneMenu id="selectPais" value="#{clienteBean.selectedEmpresa.pais.idPais}" style="width: 190px" required="true">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaPais}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.idPais}"/>
+                                    <p:ajax process="selectPais"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                            <h:panelGrid  columns="2" style="margin:0 auto" cellpadding="3">
+                                <h:panelGrid  columns="1"  cellpadding="3">
+                                    <p:commandButton value="Reset" type="reset" title="Reset" style="font-size: 14px" />
+                                </h:panelGrid>
+                                <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3">
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable, :msgs" actionListener="#{clienteBean.createEmpresa(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogEmpresaCreate').hide()" actionListener="#{clienteBean.clean()}"  icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>                                 
+                                </h:panelGrid>                      
+                                <p:tooltip id="toolTipEmpresa" for="emp" value="Ingrese una Empresa"  showEffect="clip" hideEffect="fade" trackMouse="true" style="font-size: 12px"/>
+                            </h:panelGrid>                                         
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form style="font-size: 14px; height: 40px">
+                    <p:commandButton id="BtnClienteCreate" update=":formCreate"  oncomplete="PF('dialogClienteCreate').show()" icon="ui-icon-plus" title="Crear" value="Nuevo cliente" style="font-size: 14px"/>
+                    <p:commandButton id="BtnEmpresaCreate" update=":formCreateEmpresa"  oncomplete="PF('dialogEmpresaCreate').show()" icon="ui-icon-plus" title="Crear" value="Nueva empresa" style="font-size: 14px"/> 
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

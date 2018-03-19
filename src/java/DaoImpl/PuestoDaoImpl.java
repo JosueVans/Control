@@ -31,8 +31,6 @@ public class PuestoDaoImpl implements PuestoDao {
         new HibernateException("Error ingresando a la capa de datos" + he);
     }
 
-  
-
     @Override
     public List<Rol> ListaRol() {
         List<Rol> rol = null;
@@ -43,14 +41,14 @@ public class PuestoDaoImpl implements PuestoDao {
         } catch (HibernateException he) {
             ManejaException(he);
         } finally {
-           // sesion.close();
+            // sesion.close();
         }
         return rol;
     }
-    
+
     @Override
     public List<Cargo> ListaCargos() {
-List<Cargo> car = null;
+        List<Cargo> car = null;
         try {
             IniciaSesion();
             Criteria criteria = sesion.createCriteria(Cargo.class);
@@ -59,9 +57,9 @@ List<Cargo> car = null;
         } catch (HibernateException he) {
             ManejaException(he);
         } finally {
-          //  sesion.close();
+            //  sesion.close();
         }
-        return car;      
+        return car;
     }
 
     @Override
@@ -75,7 +73,7 @@ List<Cargo> car = null;
         } catch (HibernateException he) {
             ManejaException(he);
         } finally {
-          //  sesion.close();
+            //  sesion.close();
         }
         return car;
     }
@@ -97,8 +95,8 @@ List<Cargo> car = null;
         }
         return flag;
     }
-    
-     public boolean CreateRol(Rol ro) throws HibernateException {
+
+    public boolean CreateRol(Rol ro) throws HibernateException {
 
         boolean flag;
         try {
@@ -117,18 +115,18 @@ List<Cargo> car = null;
 
     @Override
     public boolean UpdateRol(Rol ro) {
-      boolean flag;
+        boolean flag;
         try {
             IniciaSesion();
-            Rol rol=(Rol) sesion.load(Rol.class, ro.getIdRol());
+            Rol rol = (Rol) sesion.load(Rol.class, ro.getIdRol());
             rol.setNombre(ro.getNombre());
             sesion.update(rol);
             tx.commit();
             flag = true;
         } catch (HibernateException he) {
-           flag = false;
+            flag = false;
             ManejaException(he);
-         } finally {
+        } finally {
             sesion.close();
         }
         return flag;
@@ -136,16 +134,16 @@ List<Cargo> car = null;
 
     @Override
     public boolean DeleteRol(int id) {
-       boolean flag;
+        boolean flag;
         try {
             IniciaSesion();
-            Rol rol=(Rol) sesion.load(Rol.class, id);
+            Rol rol = (Rol) sesion.load(Rol.class, id);
             sesion.delete(rol);
             tx.commit();
             flag = true;
         } catch (HibernateException he) {
             flag = false;
-            ManejaException(he);          
+            ManejaException(he);
         } finally {
             sesion.close();
         }
@@ -154,19 +152,19 @@ List<Cargo> car = null;
 
     @Override
     public boolean UpdateCargo(Cargo ca) {
-       boolean flag;
+        boolean flag;
         try {
             IniciaSesion();
-            Cargo cargo=(Cargo)sesion.load(Cargo.class, ca.getIdCargo());
+            Cargo cargo = (Cargo) sesion.load(Cargo.class, ca.getIdCargo());
             cargo.setCargo(ca.getCargo());
-            cargo.setRol(ca.getRol());        
+            cargo.setRol(ca.getRol());
             sesion.update(cargo);
             tx.commit();
             flag = true;
         } catch (HibernateException he) {
-           flag = false;
+            flag = false;
             ManejaException(he);
-         } finally {
+        } finally {
             sesion.close();
         }
         return flag;
@@ -174,21 +172,38 @@ List<Cargo> car = null;
 
     @Override
     public boolean DeleteCargo(int id) {
-      boolean flag;
+        boolean flag;
         try {
             IniciaSesion();
-            Cargo cargo=(Cargo) sesion.load(Cargo.class, id);
+            Cargo cargo = (Cargo) sesion.load(Cargo.class, id);
             sesion.delete(cargo);
             tx.commit();
             flag = true;
         } catch (HibernateException he) {
             flag = false;
-            ManejaException(he);          
+            ManejaException(he);
         } finally {
             sesion.close();
         }
         return flag;
     }
 
-    
+    @Override
+    public Cargo Search(int id) throws HibernateException {
+        Cargo car = null;
+        try {
+            IniciaSesion();
+            Criteria criteria = sesion.createCriteria(Cargo.class);
+            criteria.add(Restrictions.eq("cargo.idCargo", id));
+            car = (Cargo) criteria.uniqueResult();
+
+        } catch (HibernateException he) {
+
+            ManejaException(he);
+        } finally {
+            //sesion.close();
+        }
+        return car;
+    }
+
 }

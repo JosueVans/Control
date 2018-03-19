@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
-
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
@@ -8,18 +7,27 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@192.168.0.33:1521:XE</property>
     <property name="hibernate.connection.username">admin_crm</property>
     <property name="hibernate.connection.password">oracless</property>
-    <property name="hibernate.format_sql">true</property>
-    <property name="hibernate.current_session_context_class">thread</property>
-    <mapping class="Model.Negocio"/>
-    <mapping class="Model.Usuarios"/>
-    <mapping class="Model.Empleados"/>
+    <mapping class="Model.TipoCliente"/>
+    <mapping class="Model.RubroCliente"/>
+    <mapping class="Model.Cliente"/>
     <mapping class="Model.Rol"/>
-    <mapping class="Model.Cargo"/>
+    <mapping class="Model.ProductosCliente"/>
+    <mapping class="Model.EstadoCliente"/>
+    <mapping class="Model.Productos"/>
+    <mapping class="Model.Empleados"/>
     <mapping class="Model.Fase"/>
-    <mapping class="Model.Oportunidades"/>
+    <mapping class="Model.Negocio"/>
+    <mapping class="Model.CategoriaCliente"/>
+    <mapping class="Model.Usuarios"/>
+    <mapping class="Model.DetalleNegocio"/>
     <mapping class="Model.Pais"/>
-    <mapping class="Model.EstadoNegocio"/>
-    <mapping class="Model.TipoNegocio"/>
     <mapping class="Model.Empresa"/>
+    <mapping class="Model.SectorEconomico"/>
+    <mapping class="Model.DetalleCliente"/>
+    <mapping class="Model.TipoNegocio"/>
+    <mapping class="Model.EstadoNegocio"/>
+    <mapping class="Model.Cargo"/>
+    <mapping class="Model.Oportunidades"/>
+    <mapping class="Model.Fabricante"/>
   </session-factory>
 </hibernate-configuration>

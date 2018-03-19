@@ -1,6 +1,7 @@
 package Control;
 
 import Dao.UsuarioDao;
+import DaoImpl.UsuarioDaoImpl;
 //import Dao.UsuariosDaoImpl;
 import Model.Usuarios;
 import Utils.MyUtil;
@@ -24,7 +25,7 @@ public class loginBean implements Serializable {
     
 
     public loginBean() {
-        this.usuarioDao = new UsuarioDao();
+        this.usuarioDao = new UsuarioDaoImpl();
         if (this.usuario == null) {
             this.usuario = new Usuarios();
         }

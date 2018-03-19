@@ -1,6 +1,4 @@
 package Model;
-// Generated 01-31-2018 04:23:42 PM by Hibernate Tools 4.3.1
-
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -18,8 +16,8 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
 @Entity
-@Table(name="ROL"
-    ,schema="ADMIN_CRM"
+@Table(name = "ROL",
+         schema = "ADMIN_CRM"
 )
 @NamedQueries(
         {
@@ -30,60 +28,46 @@ import org.hibernate.annotations.NamedQuery;
 )
 public class Rol implements java.io.Serializable {
 
-
-     private Integer idRol;
-     private String nombre;
-     private Set<Cargo> cargos = new HashSet<Cargo>(0);
+    private Integer idRol;
+    private String nombre;
+    private Set<Cargo> cargos = new HashSet<Cargo>(0);
 
     public Rol() {
     }
 
-	
-   
     public Rol(String nombre, Set<Cargo> cargos) {
-       //this.idRol = idRol;
-       this.nombre = nombre;
-       this.cargos = cargos;
+        this.nombre = nombre;
+        this.cargos = cargos;
     }
-   
-     @Id 
 
+    @Id
     @SequenceGenerator(name = "seq", sequenceName = "ROL_AUTO_INC")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq")
-    @Column(name="ID_ROL", unique=true, nullable=false, precision=22, scale=0)
-     public Integer getIdRol() {
-        return idRol;
+    @Column(name = "ID_ROL", unique = true, nullable = false, precision = 22, scale = 0)
+    public Integer getIdRol() {
+        return this.idRol;
     }
 
     public void setIdRol(Integer idRol) {
         this.idRol = idRol;
     }
-     
 
-    
-    @Column(name="NOMBRE", length=50)
+    @Column(name = "NOMBRE", length = 50)
     public String getNombre() {
         return this.nombre;
     }
 
-   
-    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="rol")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "rol")
     public Set<Cargo> getCargos() {
         return this.cargos;
     }
-    
+
     public void setCargos(Set<Cargo> cargos) {
         this.cargos = cargos;
     }
 
-
-
-
 }
-
-

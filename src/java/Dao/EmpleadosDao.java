@@ -18,6 +18,7 @@ public interface EmpleadosDao {
     public boolean Create(Empleados em)throws HibernateException;
     public boolean Update(Empleados em)throws HibernateException;
     public boolean Delete(int id)throws HibernateException;
+    
     public Empleados Search(int id)throws HibernateException;
     
 }

@@ -1,9 +1,11 @@
 package Model;
-// Generated 01-31-2018 04:23:42 PM by Hibernate Tools 4.3.1
+// Generated 03-13-2018 02:30:22 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,17 +44,15 @@ public class Negocio  implements java.io.Serializable {
      private Date modificaciondate;
      private String creadopor;
      private String modificadopor;
+     private Set<DetalleNegocio> detalleNegocios = new HashSet<DetalleNegocio>(0);
 
     public Negocio() {
-        this.estadoNegocio=new EstadoNegocio();
         this.oportunidades=new Oportunidades();
-        this.tipoNegocio =new TipoNegocio();
+        this.estadoNegocio=new EstadoNegocio();
+        this.tipoNegocio=new TipoNegocio();
     }
 
-	
-    
-    public Negocio(EstadoNegocio estadoNegocio, Oportunidades oportunidades, TipoNegocio tipoNegocio, Date fechaIni, Date fechaFin, BigDecimal precioOfertaNegocio, BigDecimal precioOfertaFinal, String nombreNegocio, Date fechaCierreNegocio, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor) {
-       
+    public Negocio(BigDecimal idNegocio, EstadoNegocio estadoNegocio, Oportunidades oportunidades, TipoNegocio tipoNegocio, Date fechaIni, Date fechaFin, BigDecimal precioOfertaNegocio, BigDecimal precioOfertaFinal, String nombreNegocio, Date fechaCierreNegocio, Date creaciondate, Date modificaciondate, String creadopor, String modificadopor, Set<DetalleNegocio> detalleNegocios) {
        this.estadoNegocio = estadoNegocio;
        this.oportunidades = oportunidades;
        this.tipoNegocio = tipoNegocio;
@@ -65,6 +66,7 @@ public class Negocio  implements java.io.Serializable {
        this.modificaciondate = modificaciondate;
        this.creadopor = creadopor;
        this.modificadopor = modificadopor;
+       this.detalleNegocios = detalleNegocios;
     }
    
      @Id 
@@ -90,7 +92,7 @@ public class Negocio  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="ID_OPORTUNIDADES", nullable=false)
+    @JoinColumn(name="ID_OPORTUNIDAD", nullable=false)
     public Oportunidades getOportunidades() {
         return this.oportunidades;
     }
@@ -207,6 +209,15 @@ public class Negocio  implements java.io.Serializable {
     
     public void setModificadopor(String modificadopor) {
         this.modificadopor = modificadopor;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="negocio")
+    public Set<DetalleNegocio> getDetalleNegocios() {
+        return this.detalleNegocios;
+    }
+    
+    public void setDetalleNegocios(Set<DetalleNegocio> detalleNegocios) {
+        this.detalleNegocios = detalleNegocios;
     }
 
 

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../template.xhtml">
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form id="formDataTable" style=" height: 500px" >
+                    <p:dataTable id="us" var="clientes" value="#{clienteBean.listaCliente}" scrollable="true" scrollHeight="375"
+                                 style="font-size: 14px; height: 425px" emptyMessage="No hay registros que mostrar">
+                        <f:facet name ="header">
+                            Listado de negocios
+                        </f:facet >
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{clientes.nombreCliente}" />
+                        </p:column>
+                        <p:column headerText="Telefono">
+                            <h:outputText value="#{clientes.empresa.nombreEmpresa}" />
+                        </p:column>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{clientes.email}" />
+                        </p:column>
+                        
+                       
+                    </p:dataTable>                    
+                </h:form>
+
+                <h:form id="formCreate">
+                    <p:dialog header="Crear Cliente" widgetVar="dialogClienteCreate" id="dlgClienteCreate" modal="true" showEffect="fade" hideEffect="fade" resizable="false" style="font-size: 14px">
+                        <p:outputPanel id="DetalleCliente" style="text-align: left">
+                            <h:panelGrid  columns="2" style="margin:0 auto;" cellpadding="3" >
+                                <h:outputText value="Nombre:" />
+                                <p:inputText id="nom" title="Introduzca un nombre" value="#{clienteBean.selectedCliente.nombreCliente}" size="25" maxlength="50" >
+                                 <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>  
+                               
+                                <h:outputText value="Apellido:" />
+                                <p:inputText id="apel" title="Introduzca un apellido" value="#{clienteBean.selectedCliente.apellido}" size="25" maxlength="50" >
+                                 <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>  
+                                <h:outputText value="Empresa:"/>
+                                <p:inputText id="emp" title="Introduzca una empresa" value="#{clienteBean.selectedEmpresa.nombreEmpresa}" size="25" maxlength="50">
+                                 <p:keyFilter regEx="/[a-z_]/i"/>
+                                </p:inputText>
+                                
+                                <h:outputText value="Pais:" />
+                                <p:selectOneMenu id="selectTipo" value="#{clienteBean.selectedEmpresa.pais.idPais}" style="width: 210px">                    
+                                    <f:selectItem itemLabel="--Seleccione--" itemValue="0"/>
+                                    <f:selectItems value="#{clienteBean.listaPais}" var="pais" itemLabel="#{pais.pais}" itemValue="#{pais.idPais}"/>
+                                     <p:ajax update="@this" />
+                                </p:selectOneMenu>
+                                <h:outputText value="E-Mail:" />
+                                <p:inputText id="email" title="Introduzca un correo" value="#{clienteBean.selectedCliente.email}" size="25" maxlength="50" >
+                                    <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                                
+                                </p:inputText> 
+                                <f:facet name="footer">                                  
+                                    <p:commandButton id="BtnCreateAceptar" update=":formDataTable :msgs" oncomplete="#PF('dialogClienteCreate').hide()" actionListener="#{clienteBean.createCliente(actionEvent)}" icon="ui-icon-disk" title="Guardar" value="Guardar" style="font-size: 14px"/>
+                                    <p:commandButton id="BtnCreateCancelar" oncomplete="PF('dialogClienteCreate').hide()" icon="ui-icon-close" title="Cancelar" value="Cancelar" style="font-size: 14px"/>
+                                </f:facet>
+                                <p:tooltip id="toolTipNombre" for="nom" showEvent="focus" hideEvent="blur" />
+                            </h:panelGrid>                                         
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+
+
+                <h:form style="font-size: 14px; height: 40px">
+                    <p:commandButton id="BtnUsuarioCreate" update=":formCreate"  oncomplete="PF('dialogClienteCreate').show()" icon="ui-icon-plus" title="Crear" value="Crear Cliente" style="font-size: 14px"/> 
+                    
+                </h:form>
+                
+
+            </ui:define>
+
+
+
+        </ui:composition>
+
+    </body>
+</html>

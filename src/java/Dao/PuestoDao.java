@@ -19,7 +19,7 @@ public interface PuestoDao {
     public boolean CreateCargo(Cargo ca);
     public boolean UpdateCargo(Cargo ca);
      public boolean DeleteCargo(int id);
-    
+     public Cargo Search(int id)throws HibernateException;
     
     
 }
